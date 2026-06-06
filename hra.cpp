@@ -41,7 +41,7 @@ struct Nepritel {
 };
 
 // ============================================================
-//  POMOCNE FUNKCE - VYPIS
+// POMOCNE FUNKCE - VYPIS
 // ============================================================
 
 void tiskniOddelovac() {
@@ -51,22 +51,22 @@ void tiskniOddelovac() {
 void tiskniHrace(const Hrac &h) {
     tiskniOddelovac();
     cout << " [" << h.jmeno << " - " << h.trida << "]  Level " << h.level << endl;
-    cout << " Zivoty : " << h.zivoty << " / " << h.maxZivoty << endl;
+    cout << " Životy : " << h.zivoty << " / " << h.maxZivoty << endl;
     cout << " Mana   : " << h.mana   << " / " << h.maxMana   << endl;
     cout << " Zlato  : " << h.zlato  << endl;
-    cout << " Utok   : " << h.utok   << endl;
+    cout << " Útok   : " << h.utok   << endl;
     cout << " XP     : " << h.zkusenosti << " / " << h.zkusenostiDoLevelup << endl;
     tiskniOddelovac();
 }
 
 void tiskniNepritele(const Nepritel &n) {
     cout << " >> " << n.nazev
-         << "  [Zivoty: " << n.zivoty << "/" << n.maxZivoty
-         << "  Utok: " << n.utok << "]" << endl;
+         << "  [Životy: " << n.zivoty << "/" << n.maxZivoty
+         << "  Útok: " << n.utok << "]" << endl;
 }
 
 // ============================================================
-//  NASTAVENI CLASS (pardon nejsem moc kreativni a napady clankera se mi nelibily)
+// NASTAVENI CLASS (pardon nejsem moc kreativni)
 // ============================================================
 
 void nastavWarrior(Hrac &h) {
@@ -78,9 +78,9 @@ void nastavWarrior(Hrac &h) {
     h.utok              = 15;
     h.pocetSchopnosti   = 3;
 
-    h.schopnosti[0] = {"Mocny udes",    30, 10};
-    h.schopnosti[1] = {"Vir ostri",     45, 20};
-    h.schopnosti[2] = {"Beserkersky ryk",20, 5};
+    h.schopnosti[0] = {"Mocný úděs",    30, 10};
+    h.schopnosti[1] = {"Vír ostři",     45, 20};
+    h.schopnosti[2] = {"Beserkerský ryk",20, 5};
 }
 
 void nastavMage(Hrac &h) {
@@ -92,9 +92,9 @@ void nastavMage(Hrac &h) {
     h.utok              = 8;
     h.pocetSchopnosti   = 3;
 
-    h.schopnosti[0] = {"Ohniva koule",  40, 15};
+    h.schopnosti[0] = {"Ohnivá koule",  40, 15};
     h.schopnosti[1] = {"Blesk",         60, 30};
-    h.schopnosti[2] = {"Mraziva strela",25, 8};
+    h.schopnosti[2] = {"Mrazivá střela",25, 8};
 }
 
 void nastavRogue(Hrac &h) {
@@ -106,9 +106,9 @@ void nastavRogue(Hrac &h) {
     h.utok              = 18;
     h.pocetSchopnosti   = 3;
 
-    h.schopnosti[0] = {"Kriti. udder",  50, 20};
-    h.schopnosti[1] = {"Jedovata cepel",35, 12};
-    h.schopnosti[2] = {"Rychly bodec",  22, 6};
+    h.schopnosti[0] = {"Krití. údder",  50, 20};
+    h.schopnosti[1] = {"Jedovatá šepel",35, 12};
+    h.schopnosti[2] = {"Rychlý bodec",  22, 6};
 }
 
 void nastavPaladin(Hrac &h) {
@@ -120,13 +120,13 @@ void nastavPaladin(Hrac &h) {
     h.utok              = 12;
     h.pocetSchopnosti   = 3;
 
-    h.schopnosti[0] = {"Svaty udes",    35, 15};
-    h.schopnosti[1] = {"Bozi svetlo",   50, 25};
-    h.schopnosti[2] = {"Lecive pozeh.", 0,  20}; // leceni - specialni pripad
+    h.schopnosti[0] = {"Svatý údšs",    35, 15};
+    h.schopnosti[1] = {"Boží světlo",   50, 25};
+    h.schopnosti[2] = {"Leéčivé požehnání", 0,  20}; // leceni - specialni pripad
 }
 
 // ============================================================
-//  VYBER CLASSY
+// VYBER CLASSY
 // ============================================================
 
 void vyberClassu(Hrac &h) {
@@ -134,12 +134,12 @@ void vyberClassu(Hrac &h) {
     bool potvrzen = false;
 
     while (!potvrzen) {
-        cout << "\n=== VYBER SVE POVOLANI ===" << endl;
-        cout << "\n=== HP: zivotyI ===" << endl;
-        cout << "1) Warrior  - Silny bojovnik s vysokymi zivoty (120 HP, 40 MP, utok 15)" << endl;
-        cout << "2) Mage     - Kouzelnik co toho moc nevydrzi ale ma silnou magi (70 HP, 100 MP, utok 8)" << endl;
-        cout << "3) Rogue    - Hbitý zlodej s vysokym utokem (85 HP, 60 MP, utok 18)" << endl;
-        cout << "4) Paladin  - Rytir schopny leceni (105 HP, 55 MP, utok 12)" << endl;
+        cout << "\n=== VYBER SI CLASSU ===" << endl;
+        cout << "\n=== HP: životy, MP: útok manou ===" << endl;
+        cout << "1) Warrior  - Silný bojovník s vysokými životy (120 HP, 40 MP, útok 15)" << endl;
+        cout << "2) Mage     - Kouzelník co toho moc nevydrží, ale má silnou magii (70 HP, 100 MP, útok 8)" << endl;
+        cout << "3) Rogue    - Hbitý zloděj s vysokým útokem (85 HP, 60 MP, útok 18)" << endl;
+        cout << "4) Paladin  - Rytíř schopný léčení (105 HP, 55 MP, útok 12)" << endl;
         cout << "Volba: ";
         cin >> volba;
 
@@ -149,21 +149,21 @@ void vyberClassu(Hrac &h) {
             case 3: nastavRogue(h);   break;
             case 4: nastavPaladin(h); break;
             default:
-                cout << "Neplatna volba, zkus znovu." << endl;
+                cout << "Neplatná volba, zkus znovu." << endl;
                 continue;
         }
 
         cout << "\nVybral jsi: " << h.trida << endl;
-        cout << "Potvrzujes tuto volbu? (1 = Ano, 0 = Ne): ";
+        cout << "Potvrzuješ tuto volbu? (1 = Ano, 0 = Ne): ";
         cin >> potvrzen;
     }
 
-    cout << "\nZadej jmeno sve postavy: ";
+    cout << "\nZadej jmeno své postavy: ";
     cin >> h.jmeno;
 }
 
 // ============================================================
-//  LEVEL UP
+// LEVEL UP
 // ============================================================
 
 void zkontrolujLevelUp(Hrac &h) {
@@ -179,12 +179,230 @@ void zkontrolujLevelUp(Hrac &h) {
         h.mana        += 3;
         h.utok        += 2;
 
-        cout << "\n*** NOVY LEVEL! ***" << endl;
+        cout << "\n*** NOVÝ LEVEL! ***" << endl;
         cout << "Level: " << h.level - 1 << " => " << h.level << endl;
-        cout << "Max zivoty +" << prirustek
-             << ", Max mana +3, Utok +2" << endl;
+        cout << "Max životy +" << prirustek
+             << ", Max mana +3, Útok +2" << endl;
     }
 }
+
+// ============================================================
+// BOJ - 1  nepritel
+// ============================================================
+
+// Vraci: true = hrac zil, false = hrac zemrel
+bool bojuj(Hrac &h, Nepritel &n, bool hracJdePrvni) {
+    cout << "\n!!! SOUBOJ: " << h.jmeno << " vs " << n.nazev << " !!!" << endl;
+
+    while (h.zivoty > 0 && n.zivoty > 0) {
+        tiskniOddelovac();
+        cout << "Tvoje životy: " << h.zivoty << "/" << h.maxZivoty
+             << "  |  Mana: " << h.mana << "/" << h.maxMana << endl;
+        tiskniNepritele(n);
+
+        // tah hrace (nebo nepritel jde prvni)
+        if (!hracJdePrvni && n.zivoty > 0) {
+            // nepritel utoci prvni
+            int skoda = n.utok;
+            h.zivoty -= skoda;
+            if (h.zivoty < 0) h.zivoty = 0;
+            cout << n.nazev << " útočí! Způsobuje " << skoda << " poškození." << endl;
+            if (h.zivoty <= 0) break;
+        }
+
+        // volba hrace
+        cout << "\nJaký útok si vybereš?" << endl;
+        cout << "0) Základní útok (" << h.utok << " poškození, zdarma)" << endl;
+        for (int i = 0; i < h.pocetSchopnosti; i++) {
+            cout << i + 1 << ") " << h.schopnosti[i].nazev
+                 << " (" << h.schopnosti[i].poskozeni << " pos."
+                 << ", " << h.schopnosti[i].manaNaklady << " many)" << endl;
+        }
+        cout << "Volba: ";
+        int volba;
+        cin >> volba;
+
+        if (volba == 0) {
+            // Zakladni utok
+            int skoda = h.utok;
+            n.zivoty -= skoda;
+            if (n.zivoty < 0) n.zivoty = 0;
+            cout << "Zasahujes " << n.nazev << " za " << skoda << " Poškození." << endl;
+        } else if (volba >= 1 && volba <= h.pocetSchopnosti) {
+            Schopnost &s = h.schopnosti[volba - 1];
+            if (h.mana < s.manaNaklady) {
+                cout << "Nedostatek many! Útočíš základním útokem." << endl;
+                n.zivoty -= h.utok;
+                if (n.zivoty < 0) n.zivoty = 0;
+            } else {
+                h.mana -= s.manaNaklady;
+                // Specialni pripad: Lecive pozehani Paladina (poskozeni == 0)
+                if (s.poskozeni == 0) {
+                    int heal = 20;
+                    h.zivoty += heal;
+                    if (h.zivoty > h.maxZivoty) h.zivoty = h.maxZivoty;
+                    cout << "Lečíš se za " << heal << " zivotu!" << endl;
+                } else {
+                    n.zivoty -= s.poskozeni;
+                    if (n.zivoty < 0) n.zivoty = 0;
+                    cout << "Pouzivas " << s.nazev << "! "
+                         << n.nazev << " ztrácí " << s.poskozeni << " životů." << endl;
+                }
+            }
+        } else {
+            cout << "Neplatná volba, útočíš základním útokem." << endl;
+            n.zivoty -= h.utok;
+            if (n.zivoty < 0) n.zivoty = 0;
+        }
+
+        if (n.zivoty <= 0) break;
+
+        // tah nepritele (kdyz hrac siel prvni nebo normal monstra)
+        if (hracJdePrvni && n.zivoty > 0) {
+            int skoda = n.utok;
+            h.zivoty -= skoda;
+            if (h.zivoty < 0) h.zivoty = 0;
+            cout << n.nazev << " útočí! Způsobuje " << skoda << " poškození." << endl;
+        } else if (!hracJdePrvni && n.zivoty > 0) {
+            // druhy utok bosse (boss zautocil jiz pred hracem)
+            int skoda = n.utok;
+            h.zivoty -= skoda;
+            if (h.zivoty < 0) h.zivoty = 0;
+            cout << n.nazev << " opět útočí! Způsobuje " << skoda << " poškození." << endl;
+        }
+    }
+
+    if (h.zivoty <= 0) {
+        cout << "\n*** " << h.jmeno << " zemřel jsi! KONEC HRY ***" << endl;
+        return false;
+    }
+
+    // hrac vyhral souboj
+    cout << "\n" << h.jmeno << " porazil " << n.nazev << "!" << endl;
+
+    // zkusenosti
+    h.zkusenosti += n.odmenaZkusenosti;
+    cout << "Získáš " << n.odmenaZkusenosti << " XP." << endl;
+    zkontrolujLevelUp(h);
+
+    // Zlato
+    if (n.odmenaZlato > 0) {
+        h.zlato += n.odmenaZlato;
+        cout << "Našels " << n.odmenaZlato << " zlata!" << endl;
+    } else {
+        cout << "Monstrum u sebe nic nemělo." << endl;
+    }
+
+    return true;
+}
+
+// ============================================================
+// BOJ S VICE NEPRATELI NAJEDNOU
+// ============================================================
+
+bool bojujSkupina(Hrac &h, Nepritel nepratele[], int pocet) {
+    cout << "\n!!! SKUPINOVÝ SOUBOJ (" << pocet << " nepratele) !!!" << endl;
+    for (int i = 0; i < pocet; i++) {
+        cout << "  - " << nepratele[i].nazev << endl;
+    }
+
+    //hrac jde prvni ve skupinovem souboji
+    while (h.zivoty > 0) {
+        int ziviPocet = 0;
+        for (int i = 0; i < pocet; i++) {
+            if (nepratele[i].zivoty > 0) ziviPocet++;
+        }
+        if (ziviPocet == 0) break;
+
+        tiskniOddelovac();
+        cout << "Tvoje životy: " << h.zivoty << "/" << h.maxZivoty
+             << "  |  Mana: " << h.mana << "/" << h.maxMana << endl;
+        cout << "Neprřátelé:" << endl;
+        for (int i = 0; i < pocet; i++) {
+            if (nepratele[i].zivoty > 0) {
+                cout << "  " << i + 1 << ") ";
+                tiskniNepritele(nepratele[i]);
+            }
+        }
+
+        // vyber cile
+        cout << "Zvol cíl (1-" << pocet << "): ";
+        int cil;
+        cin >> cil;
+        cil--;   // index od 0
+        if (cil < 0 || cil >= pocet || nepratele[cil].zivoty <= 0) {
+            cout << "Neplatný cíl, útočíš na prvého živého." << endl;
+            cil = 0;
+            while (cil < pocet && nepratele[cil].zivoty <= 0) cil++;
+        }
+
+        // Volba akce
+        cout << "Akce: 0) Zakládní útok";
+        for (int i = 0; i < h.pocetSchopnosti; i++) {
+            cout << "  " << i + 1 << ") " << h.schopnosti[i].nazev
+                 << "(" << h.schopnosti[i].manaNaklady << " MP)";
+        }
+        cout << endl << "Volba: ";
+        int volba;
+        cin >> volba;
+
+        if (volba == 0) {
+            nepratele[cil].zivoty -= h.utok;
+            if (nepratele[cil].zivoty < 0) nepratele[cil].zivoty = 0;
+            cout << "Utočíš na " << nepratele[cil].nazev << " za " << h.utok << "." << endl;
+        } else if (volba >= 1 && volba <= h.pocetSchopnosti) {
+            Schopnost &s = h.schopnosti[volba - 1];
+            if (h.mana < s.manaNaklady) {
+                cout << "Nedostatek many!" << endl;
+                nepratele[cil].zivoty -= h.utok;
+                if (nepratele[cil].zivoty < 0) nepratele[cil].zivoty = 0;
+            } else {
+                h.mana -= s.manaNaklady;
+                if (s.poskozeni == 0) {
+                    int heal = 20;
+                    h.zivoty += heal;
+                    if (h.zivoty > h.maxZivoty) h.zivoty = h.maxZivoty;
+                    cout << "Lecis se za " << heal << " HP!" << endl;
+                } else {
+                    nepratele[cil].zivoty -= s.poskozeni;
+                    if (nepratele[cil].zivoty < 0) nepratele[cil].zivoty = 0;
+                    cout << s.nazev << " na " << nepratele[cil].nazev
+                         << " za " << s.poskozeni << "." << endl;
+                }
+            }
+        }
+
+        // utoky zivyc nepritelu
+        for (int i = 0; i < pocet; i++) {
+            if (nepratele[i].zivoty > 0) {
+                int skoda = nepratele[i].utok;
+                h.zivoty -= skoda;
+                if (h.zivoty < 0) h.zivoty = 0;
+                cout << nepratele[i].nazev << " útočí za: " << skoda << "." << endl;
+                if (h.zivoty <= 0) break;
+            }
+        }
+    }
+
+    if (h.zivoty <= 0) {
+        cout << "\n*** " << h.jmeno << " zemrel! KONEC HRY ***" << endl;
+        return false;
+    }
+
+    cout << "\nVyhrál jsi skupinový souboj!" << endl;
+
+    for (int i = 0; i < pocet; i++) {
+        h.zkusenosti += nepratele[i].odmenaZkusenosti;
+        cout << "+" << nepratele[i].odmenaZkusenosti << " XP za " << nepratele[i].nazev << endl;
+        if (nepratele[i].odmenaZlato > 0) {
+            h.zlato += nepratele[i].odmenaZlato;
+            cout << "+" << nepratele[i].odmenaZlato << " zlata za " << nepratele[i].nazev << endl;
+        }
+    }
+    zkontrolujLevelUp(h);
+    return true;
+}
+
 int main{
     SetConsoleOutputCP(CP_UTF8);
     SetConsoleCP(CP_UTF8);
