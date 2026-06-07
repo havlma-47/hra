@@ -705,7 +705,94 @@ bool bojujCoincling(Hrac &h) {
     return true;
 }
 
+// ============================================================
+// HLAVNI FUNKCE
+// ============================================================
+
 int main{
     SetConsoleOutputCP(CP_UTF8);
     SetConsoleCP(CP_UTF8);
+    
+        srand((unsigned)time(0));
+
+    cout << "========================================" << endl;
+    cout << "       VITEJ V TEXTOVEM RPG!            " << endl;
+    cout << "========================================" << endl;
+
+    // ---- Hrac ----
+    Hrac hrac;
+    hrac.level                = 1;
+    hrac.zkusenosti           = 0;
+    hrac.zkusenostiDoLevelup  = 50;
+    hrac.zlato                = 20;
+
+    vyberClassu(hrac);
+    tiskniHrace(hrac);
+    cout << "\nDobra cesta, " << hrac.jmeno << "!" << endl;
+
+    // ================================================================
+    //  MAPA: |V| M | M | 2xM | MB | V | M | 2xM | 2xM | MB |
+    //        | V | 2xM | 2xM | 3xM | V | HB |
+    //  Celkem: 16 monster (1+1+2+2+1+2+2+2 = 13 solo + 3 ve skupine)
+    //  + 2 mini-bossove + 1 hlavni boss
+    // ================================================================
+
+    bool ziv = true;
+
+    // ---- VESNICE 1: Nástupní město ----
+    navstivVesnici(hrac, "Pocatecni vesnice");
+    if (hrac.zivoty <= 0) { return 0; }
+
+    // ---- 1. Monstrum ----
+    if (ziv) {
+        Nepritel m = vytvorMonstrum("Gobling", 30, 8, 15, 3, 8);
+        ziv = bojuj(hrac, m, true);
+    }
+
+    // ---- 2. Monstrum ----
+    if (ziv) {
+        Nepritel m = vytvorMonstrum("Vlk", 35, 10, 18, 4, 9);
+        ziv = bojuj(hrac, m, true);
+    }
+
+    // ---- 2x Monstrum ----
+    if (ziv) {
+        Nepritel skupina[2];
+        skupina[0] = vytvorMonstrum("Gobling strazce", 28, 7, 12, 2, 7);
+        skupina[1] = vytvorMonstrum("Goblin luchshtar", 25, 9, 12, 2, 7);
+        ziv = bojujSkupina(hrac, skupina, 2);
+    }
+
+    // ---- MINI-BOSS 1 ----
+    if (ziv) {
+        Nepritel mb = vytvorBosse("Orksky nacelink", 80, 18, 50, 25);
+        ziv = bojuj(hrac, mb, false);  // Boss ide prvni
+    }
+
+    // ---- VESNICE 2 ----
+    if (ziv) {
+        navstivVesnici(hrac, "Lesni vesnicka");
+    }
+
+    // ---- 3. Monstrum ----
+    if (ziv) {
+        Nepritel m = vytvorMonstrum("Prales vpr", 40, 11, 20, 5, 10);
+        ziv = bojuj(hrac, m, true);
+    }
+
+    // ---- 2x Monstrum ----
+    if (ziv) {
+        Nepritel skupina[2];
+        skupina[0] = vytvorMonstrum("Jedovaty pavouci", 32, 10, 14, 3, 8);
+        skupina[1] = vytvorMonstrum("Jedovaty pavouci", 32, 10, 14, 3, 8);
+        ziv = bojujSkupina(hrac, skupina, 2);
+    }
+
+    // ---- 2x Monstrum ----
+    if (ziv) {
+        Nepritel skupina[2];
+        skupina[0] = vytvorMonstrum("Kamenny golem (maly)", 50, 12, 20, 5, 12);
+        skupina[1] = vytvorMonstrum("Kamenny golem (maly)", 50, 12, 20, 5, 12);
+        ziv = bojujSkupina(hrac, skupina, 2);
+    }
 }
