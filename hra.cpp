@@ -215,7 +215,7 @@ bool bojuj(Hrac &h, Nepritel &n, bool hracJdePrvni) {
         cout << "0) Základní útok (" << h.utok << " poškození, zdarma)" << endl;
         for (int i = 0; i < h.pocetSchopnosti; i++) {
             cout << i + 1 << ") " << h.schopnosti[i].nazev
-                 << " (" << h.schopnosti[i].poskozeni << " pos."
+                 << " (" << h.schopnosti[i].poskozeni << " poškození"
                  << ", " << h.schopnosti[i].manaNaklady << " many)" << endl;
         }
         cout << "Volba: ";
@@ -301,7 +301,7 @@ bool bojuj(Hrac &h, Nepritel &n, bool hracJdePrvni) {
 // ============================================================
 
 bool bojujSkupina(Hrac &h, Nepritel nepratele[], int pocet) {
-    cout << "\n!!! SKUPINOVÝ SOUBOJ (" << pocet << " nepratele) !!!" << endl;
+    cout << "\n!!! SKUPINOVÝ SOUBOJ (" << pocet << " nepřátelů) !!!" << endl;
     for (int i = 0; i < pocet; i++) {
         cout << "  - " << nepratele[i].nazev << endl;
     }
@@ -317,7 +317,7 @@ bool bojujSkupina(Hrac &h, Nepritel nepratele[], int pocet) {
         tiskniOddelovac();
         cout << "Tvoje životy: " << h.zivoty << "/" << h.maxZivoty
              << "  |  Mana: " << h.mana << "/" << h.maxMana << endl;
-        cout << "Neprřátelé:" << endl;
+        cout << "Nepřátelé:" << endl;
         for (int i = 0; i < pocet; i++) {
             if (nepratele[i].zivoty > 0) {
                 cout << "  " << i + 1 << ") ";
@@ -385,7 +385,7 @@ bool bojujSkupina(Hrac &h, Nepritel nepratele[], int pocet) {
     }
 
     if (h.zivoty <= 0) {
-        cout << "\n*** " << h.jmeno << " zemrel! KONEC HRY ***" << endl;
+        cout << "\n*** " << h.jmeno << " zemřel jsi! KONEC HRY ***" << endl;
         return false;
     }
 
@@ -524,7 +524,7 @@ Nepritel vytvorBosse(const string &nazev, int zivoty, int utok,
 
 bool bojujCoincling(Hrac &h) {
     cout << "\n========================================" << endl;
-    cout << "  $$$ ZJEVI SE COINCLING $$$" << endl;
+    cout << "  $$$ ZJEVÍ SE COINCLING $$$" << endl;
     cout << "========================================" << endl;
     cout << "Vejdeš do místnosti a vidíš jak se na tebe malý trpaslík zubí." << endl;
     cout << "\"Ty... ty jsi tu kvůli MÉMU zlatu, viď?!\"" << endl;
