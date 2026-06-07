@@ -407,3 +407,305 @@ int main{
     SetConsoleOutputCP(CP_UTF8);
     SetConsoleCP(CP_UTF8);
 }
+
+// ============================================================
+// VESNICE
+// ============================================================
+
+void navstivVesnici(Hrac &h, const string &nazev) {
+    int volba;
+    bool odchod = false;
+
+    cout << "\n=== VESNICE: " << nazev << " ===" << endl;
+    cout << "Vítej, poutníku!" << endl;
+
+    while (!odchod) {
+        tiskniHrace(h);
+        cout << "\nCo chceš udělat?" << endl;
+        cout << "1) Doplnit životy (10 zlata = full)" << endl;
+        cout << "2) Zvýšit životy +10 (25 zlata)" << endl;
+        cout << "3) Zvysit max manu +10 (20 zlata)" << endl;
+        cout << "4) Zvysit utok +5 (30 zlata)" << endl;
+        cout << "5) Odejit z vesnice" << endl;
+        cout << "Volba: ";
+        cin >> volba;
+
+        switch (volba) {
+            case 1:
+                if (h.zlato < 10) {
+                    cout << "Nemáš dost zlata! ( potřebuješ 10)" << endl;
+                } else {
+                    h.zlato  -= 10;
+                    h.zivoty  = h.maxZivoty;
+                    h.mana    = h.maxMana;
+                    cout << "Jsi plně vyléčen!" << endl;
+                }
+                break;
+            case 2:
+                if (h.zlato < 25) {
+                    cout << "Nemáš dost zlata! (potrebujes 25)" << endl;
+                } else {
+                    h.zlato    -= 25;
+                    h.maxZivoty += 10;
+                    h.zivoty   += 10;
+                    if (h.zivoty > h.maxZivoty) h.zivoty = h.maxZivoty;
+                    cout << "Max životy zvýšeny na " << h.maxZivoty << "!" << endl;
+                }
+                break;
+            case 3:
+                if (h.zlato < 20) {
+                    cout << "Nemáš dost zlata! (potřebuješ 20)!" << endl;
+                } else {
+                    h.zlato  -= 20;
+                    h.maxMana += 10;
+                    h.mana   += 10;
+                    if (h.mana > h.maxMana) h.mana = h.maxMana;
+                    cout << "Max mana zvýšena na " << h.maxMana << "!" << endl;
+                }
+                break;
+            case 4:
+                if (h.zlato < 30) {
+                    cout << "Nemáš dost zlata! (potřebuješ 30)!" << endl;
+                } else {
+                    h.zlato -= 30;
+                    h.utok  += 5;
+                    cout << "Útok zvýšen na " << h.utok << "!" << endl;
+                }
+                break;
+            case 5:
+                odchod = true;
+                cout << "Hodně štěstí na cestě!" << endl;
+                break;
+            default:
+                cout << "Neplatná volba!" << endl;
+        }
+    }
+}
+
+// ============================================================
+// 50% NA ZLATO Z MONSTER
+// ============================================================
+
+int nahodneZlato(int min, int max) {
+    if (rand() % 2 == 0) return 0;           // 50% nema nic
+    return min + rand() % (max - min + 1);
+}
+
+// ============================================================
+// NEPRITELE
+// ============================================================
+
+Nepritel vytvorMonstrrum(const string &nazev, int zivoty, int utok,
+                          int xp, int minZlato, int maxZlato) {
+    Nepritel n;
+    n.nazev              = nazev;
+    n.maxZivoty          = zivoty;
+    n.zivoty             = zivoty;
+    n.utok               = utok;
+    n.odmenaZkusenosti   = xp;
+    n.odmenaZlato        = nahodneZlato(minZlato, maxZlato);
+    n.jeBoss             = false;
+    return n;
+}
+
+Nepritel vytvorBosse(const string &nazev, int zivoty, int utok,
+                     int xp, int zlato) {
+    Nepritel n;
+    n.nazev              = nazev;
+    n.maxZivoty          = zivoty;
+    n.zivoty             = zivoty;
+    n.utok               = utok;
+    n.odmenaZkusenosti   = xp;
+    n.odmenaZlato        = zlato;  // Boss ma zlato vzdy
+    n.jeBoss             = true;
+    return n;
+}
+
+// ============================================================
+// COINCLING
+// ============================================================
+// 10 20 30 40 50
+// poskozeni = hracovo aktualni zlatp
+
+bool bojujCoincling(Hrac &h) {
+    cout << "\n========================================" << endl;
+    cout << "  $$$ ZJEVI SE COINCLING $$$" << endl;
+    cout << "========================================" << endl;
+    cout << "Vejdeš do místnosti a vidíš jak se na tebe malý trpaslík zubí." << endl;
+    cout << "\"Ty... ty jsi tu kvůli MÉMU zlatu, viď?!\"" << endl;
+    cout << "\"Od tuď vyjde s plnými kapsami a na živu jen jeden z nás...\"" << endl;
+
+    int pocatecniUtok = h.zlato;
+    cout << "\n*Coincling spatří tvoje zlato a zuřivě se na tebe vrhne*" << endl;
+    cout << "\nVymlátím z tebe každou minci!" << endl;
+    cout << "*Způsobuje ti " << pocatecniUtok << " poškození (dává poškození podle toho, kolik máš zlata)*" << endl;
+    h.zivoty -= pocatecniUtok;
+    if (h.zivoty < 0) h.zivoty = 0;
+
+    if (h.zivoty <= 0) {
+        cout << "\n*** " << h.jmeno << " Zemřel jsi! *KONEC HRY!*" << endl;
+        return false;
+    }
+
+    // Coincling ti da 20 zlata
+    cout << "\nCoincling se zahihňá \"*Vypadne mu 20 zlata z kapsy*\"" << endl;
+    h.zlato += 20;
+    cout << "Získáváš 20 zlata. Tvoje zlato: " << h.zlato << endl;
+
+    // Coincling statistiky
+    int coinclingZivoty    = 180;
+    int coinclingMaxZivoty = 180;
+
+    // 0=10 zlata 1=20 2=30 3=40 4=50
+    bool prahSpusten[5] = {false, false, false, false, false};
+    int prahy[5]        = {10, 20, 30, 40, 50};
+
+    cout << "\n--- BOJ ZACINA ---" << endl;
+
+    while (h.zivoty > 0 && coinclingZivoty > 0) {
+
+        tiskniOddelovac();
+        cout << "Tvoje životy : " << h.zivoty  << "/" << h.maxZivoty  << endl;
+        cout << "Tvoje mana   : " << h.mana    << "/" << h.maxMana    << endl;
+        cout << "Tvoje zlato  : " << h.zlato   << endl;
+        cout << " >> COINCLING  [Životy: " << coinclingZivoty << "/" << coinclingMaxZivoty << "]" << endl;
+
+        // HRACUV TAH
+        cout << "\nCo uděláš?" << endl;
+        cout << "0) Základní útok (" << h.utok << " poškození)" << endl;
+        for (int i = 0; i < h.pocetSchopnosti; i++) {
+            cout << i + 1 << ") " << h.schopnosti[i].nazev
+                 << " (" << h.schopnosti[i].poskozeni << " poškození. "
+                 << h.schopnosti[i].manaNaklady << " MP)" << endl;
+        }
+        cout << "Volba: ";
+        int volba;
+        cin >> volba;
+
+        if (volba == 0) {
+            coinclingZivoty -= h.utok;
+            if (coinclingZivoty < 0) coinclingZivoty = 0;
+            cout << "Zasahuješ Coinclinga za " << h.utok << "." << endl;
+        } else if (volba >= 1 && volba <= h.pocetSchopnosti) {
+            Schopnost &s = h.schopnosti[volba - 1];
+            if (h.mana < s.manaNaklady) {
+                cout << "Nedostatek many! Útočíš základním útokem." << endl;
+                coinclingZivoty -= h.utok;
+                if (coinclingZivoty < 0) coinclingZivoty = 0;
+            } else {
+                h.mana -= s.manaNaklady;
+                if (s.poskozeni == 0) {
+                    int heal = 20;
+                    h.zivoty += heal;
+                    if (h.zivoty > h.maxZivoty) h.zivoty = h.maxZivoty;
+                    cout << "Léčíš se za " << heal << " HP!" << endl;
+                } else {
+                    coinclingZivoty -= s.poskozeni;
+                    if (coinclingZivoty < 0) coinclingZivoty = 0;
+                    cout << "Používáš " << s.nazev << "! Coincling ztrácí "
+                         << s.poskozeni << " životů." << endl;
+                }
+            }
+        } else {
+            cout << "Neplatná volba. Útočíš základním útokem." << endl;
+            coinclingZivoty -= h.utok;
+            if (coinclingZivoty < 0) coinclingZivoty = 0;
+        }
+
+        if (coinclingZivoty <= 0) break;
+
+        // Coinclinguv tah zlato roste a boli
+
+        // 1) Urok 10%
+        int urok = h.zlato / 10;
+        if (urok < 1) urok = 1;  // aspon 1
+        h.zlato += urok;
+        cout << "\nCoincling kouzli urok! +10% zlata = +" << urok
+             << " (zlato: " << h.zlato << ")" << endl;
+
+        // 2) Za kazych 10 zlata +1 dalsi
+        int bonus = h.zlato / 10;
+        h.zlato += bonus;
+        cout << "Peníze rostou na stromech! +" << bonus
+             << " (zlato: " << h.zlato << ")" << endl;
+
+        // 3) Poskozeni = zlato hrace
+        int skodaZlata = h.zlato;
+        h.zivoty -= skodaZlata;
+        if (h.zivoty < 0) h.zivoty = 0;
+        cout << "Coincling tě přetáhne zlatou cihlou a udělí ti poškození "
+             << skodaZlata << " !" << endl;
+
+        if (h.zivoty <= 0) break;
+
+        // kontrola prahu zlata
+        for (int i = 0; i < 5; i++) {
+            if (!prahSpusten[i] && h.zlato >= prahy[i]) {
+                prahSpusten[i] = true;
+
+                switch (prahy[i]) {
+                    case 10:
+                        coinclingZivoty += 10;
+                        if (coinclingZivoty > coinclingMaxZivoty)
+                            coinclingMaxZivoty = coinclingZivoty;
+                        cout << "\n[PRÁH 10 zlata] Coincling se uzdravuje o 10 HP! "
+                             << "(" << coinclingZivoty << " HP)" << endl;
+                        break;
+                    case 20:
+                        h.maxZivoty -= 10;
+                        if (h.maxZivoty < 1) h.maxZivoty = 1;
+                        if (h.zivoty > h.maxZivoty) h.zivoty = h.maxZivoty;
+                        cout << "\n[PRÁH 20 zlata] Tíže zlata ti ubírá sílu! "
+                             << "Max zivoty -10 => " << h.maxZivoty << endl;
+                        break;
+                    case 30:
+                        coinclingZivoty += 10;
+                        if (coinclingZivoty > coinclingMaxZivoty)
+                            coinclingMaxZivoty = coinclingZivoty;
+                        cout << "\n[PRÁH 30 zlata] Coincling se uzdravuje o 10 HP! "
+                             << "(" << coinclingZivoty << " HP)" << endl;
+                        break;
+                    case 40:
+                        h.maxZivoty -= 10;
+                        if (h.maxZivoty < 1) h.maxZivoty = 1;
+                        if (h.zivoty > h.maxZivoty) h.zivoty = h.maxZivoty;
+                        cout << "\n[PRÁH 40 zlata] Topíš se ve zlatě! "
+                             << "Max zivoty -10 => " << h.maxZivoty << endl;
+                        break;
+                    case 50:
+                        cout << "\n[PRÁH 50 zlata] *** PROPADLI JSTE SE DO PEKLA Z TOHO JAK PLNÉ KAPSY UKRADENÉHO ZLATA MÁŠ! ***" << endl;
+                        h.zivoty -= 20;
+                        if (h.zivoty < 0) h.zivoty = 0;
+                        coinclingZivoty -= 20;
+                        if (coinclingZivoty < 0) coinclingZivoty = 0;
+                        cout << "Oba obdržíte 20 poškození! "
+                             << "(Ty: " << h.zivoty << " HP, "
+                             << "Coincling: " << coinclingZivoty << " HP)" << endl;
+                        break;
+                }
+
+                if (h.zivoty <= 0 || coinclingZivoty <= 0) break;
+            }
+        }
+    }
+
+    // --- Vysledek ---
+    if (h.zivoty <= 0) {
+        cout << "\n*** " << h.jmeno << " byl rozdrcen tíhou zlata! *KONEC HRY*" << endl;
+        return false;
+    }
+
+    cout << "\n========================================" << endl;
+    cout << "*** COINCLING PORAZEN! ***" << endl;
+    cout << "Trpaslík leží nehybně na zemi, zatím co mu kradeš poslední zlaté mince z kapes..." << endl;
+    cout << "\"...Stálo ti to za to?\"" << endl;
+    cout << "\"Dobrá práce.\"" << endl;
+    cout << "========================================" << endl;
+
+    h.zkusenosti += 150;
+    h.zlato += 100;
+    cout << "+150 XP, +100 zlata" << endl;
+    zkontrolujLevelUp(h);
+
+    return true;
+}
