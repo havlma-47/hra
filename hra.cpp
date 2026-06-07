@@ -10,8 +10,8 @@ using namespace std;
 
 struct Schopnost {
     string nazev;
-    int poskozeni;    // kolik ubere zivotu
-    int manaNaklady;  // kolik stoji many
+    int poskozeni; // kolik ubere zivotu
+    int manaNaklady; // kolik stoji many
 };
 
 struct Hrac {
@@ -25,7 +25,7 @@ struct Hrac {
     int level;
     int zkusenosti;
     int zkusenostiDoLevelup;
-    int utok;           // zakladni utok (bez many)
+    int utok;                       // zakladni utok (bez many)
     Schopnost schopnosti[4];
     int pocetSchopnosti;
 };
@@ -36,12 +36,12 @@ struct Nepritel {
     int zivoty;
     int utok;
     int odmenaZkusenosti;
-    int odmenaZlato;    // 0 = nema penize
-    bool jeBoss;        // mini-boss nebo hlavni boss vždy ma zlato
+    int odmenaZlato;          // 0 = nema penize
+    bool jeBoss;             // mini-boss nebo hlavni boss vždy ma zlato
 };
 
 // ============================================================
-// POMOCNE FUNKCE - VYPIS
+// POMOCNE FUNKCE VYPIS
 // ============================================================
 
 void tiskniOddelovac() {
@@ -66,7 +66,7 @@ void tiskniNepritele(const Nepritel &n) {
 }
 
 // ============================================================
-// NASTAVENI CLASS (pardon nejsem moc kreativni)
+// NASTAVENI CLASS
 // ============================================================
 
 void nastavWarrior(Hrac &h) {
@@ -403,11 +403,6 @@ bool bojujSkupina(Hrac &h, Nepritel nepratele[], int pocet) {
     return true;
 }
 
-int main{
-    SetConsoleOutputCP(CP_UTF8);
-    SetConsoleCP(CP_UTF8);
-}
-
 // ============================================================
 // VESNICE
 // ============================================================
@@ -708,4 +703,9 @@ bool bojujCoincling(Hrac &h) {
     zkontrolujLevelUp(h);
 
     return true;
+}
+
+int main{
+    SetConsoleOutputCP(CP_UTF8);
+    SetConsoleCP(CP_UTF8);
 }
