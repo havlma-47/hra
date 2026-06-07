@@ -490,7 +490,7 @@ int nahodneZlato(int min, int max) {
 // NEPRITELE
 // ============================================================
 
-Nepritel vytvorMonstrrum(const string &nazev, int zivoty, int utok,
+Nepritel vytvorMonstrum(const string &nazev, int zivoty, int utok,
                           int xp, int minZlato, int maxZlato) {
     Nepritel n;
     n.nazev              = nazev;
@@ -709,17 +709,17 @@ bool bojujCoincling(Hrac &h) {
 // HLAVNI FUNKCE
 // ============================================================
 
-int main{
+int main(){
     SetConsoleOutputCP(CP_UTF8);
     SetConsoleCP(CP_UTF8);
 
-        srand((unsigned)time(0));
+    srand((unsigned)time(0));
 
     cout << "========================================" << endl;
     cout << "            VÍTEJ, POUTNÍKU!           " << endl;
     cout << "========================================" << endl;
 
-    // -Hrac
+    // Hrac
     Hrac hrac;
     hrac.level = 1;
     hrac.zkusenosti = 0;
@@ -745,42 +745,42 @@ int main{
 
     // 1. Monstrum
     if (ziv) {
-        Nepritel m = vytvorMonstrum("Gobling", 30, 8, 15, 3, 8);
+        Nepritel m = vytvorMonstrum("Goblin", 30, 8, 15, 3, 8);
         ziv = bojuj(hrac, m, true);
     }
 
-    // ---- 2. Monstrum ----
+    // 2. Monstrum
     if (ziv) {
         Nepritel m = vytvorMonstrum("Vlk", 35, 10, 18, 4, 9);
         ziv = bojuj(hrac, m, true);
     }
 
-    // ---- 2x Monstrum ----
+    // 2x Monstrum
     if (ziv) {
         Nepritel skupina[2];
-        skupina[0] = vytvorMonstrum("Gobling strážce", 28, 7, 12, 2, 7);
+        skupina[0] = vytvorMonstrum("Goblin strážce", 28, 7, 12, 2, 7);
         skupina[1] = vytvorMonstrum("Goblin luchshtar", 25, 9, 12, 2, 7);
         ziv = bojujSkupina(hrac, skupina, 2);
     }
 
-    // ---- MINI-BOSS 1 ----
+    // MINI-BOSS 1
     if (ziv) {
         Nepritel mb = vytvorBosse("Orkský náčelník", 80, 18, 50, 25);
         ziv = bojuj(hrac, mb, false);
     }
 
-    // ---- VESNICE 2 ----
+    // VESNICE 2
     if (ziv) {
         navstivVesnici(hrac, "Lesni vesnička");
     }
 
-    // ---- 3. Monstrum ----
+    // 3. Monstrum
     if (ziv) {
-        Nepritel m = vytvorMonstrum("Prales vpr", 40, 11, 20, 5, 10);
+        Nepritel m = vytvorMonstrum("Prales", 40, 11, 20, 5, 10);
         ziv = bojuj(hrac, m, true);
     }
 
-    // ---- 2x Monstrum ----
+    // 2x Monstrum
     if (ziv) {
         Nepritel skupina[2];
         skupina[0] = vytvorMonstrum("Jedovatí pavouci", 32, 10, 14, 3, 8);
@@ -788,26 +788,26 @@ int main{
         ziv = bojujSkupina(hrac, skupina, 2);
     }
 
-    // ---- 2x Monstrum ----
+    // 2x Monstrum
     if (ziv) {
         Nepritel skupina[2];
-        skupina[0] = vytvorMonstrum("Kamenný golem (malý)", 50, 12, 20, 5, 12);
-        skupina[1] = vytvorMonstrum("Kamenný golem (malý)", 50, 12, 20, 5, 12);
+        skupina[0] = vytvorMonstrum("Kamenný golem", 50, 12, 20, 5, 12);
+        skupina[1] = vytvorMonstrum("Kamenný golem", 50, 12, 20, 5, 12);
         ziv = bojujSkupina(hrac, skupina, 2);
     }
 
-    // ---- MINI-BOSS 2 ----
+    // MINI-BOSS 2
     if (ziv) {
         Nepritel mb = vytvorBosse("Upírský vladyka", 110, 22, 75, 35);
         ziv = bojuj(hrac, mb, false);
     }
 
-    // ---- VESNICE 3 ----
+    // VESNICE 3
     if (ziv) {
         navstivVesnici(hrac, "Vesnický trh");
     }
 
-    // ---- 2x Monstrum ----
+    // 2x Monstrum
     if (ziv) {
         Nepritel skupina[2];
         skupina[0] = vytvorMonstrum("Temný rytíř", 55, 14, 25, 8, 15);
@@ -815,7 +815,7 @@ int main{
         ziv = bojujSkupina(hrac, skupina, 2);
     }
 
-    // ---- 2x Monstrum ----
+    // 2x Monstrum
     if (ziv) {
         Nepritel skupina[2];
         skupina[0] = vytvorMonstrum("Ledový troll", 60, 15, 28, 7, 14);
@@ -823,7 +823,7 @@ int main{
         ziv = bojujSkupina(hrac, skupina, 2);
     }
 
-    // ---- 3x Monstrum ----
+    // 3x Monstrum
     if (ziv) {
         Nepritel skupina[3];
         skupina[0] = vytvorMonstrum("Zloděj stínů",  40, 13, 22, 6, 12);
@@ -832,12 +832,12 @@ int main{
         ziv = bojujSkupina(hrac, skupina, 3);
     }
 
-    // ---- VESNICE 4 (posledni) ----
+    // VESNICE 4 (posledni)
     if (ziv) {
         navstivVesnici(hrac, "Pevnostni mesto");
     }
 
-    // ---- HLAVNI BOSS: COINCLING ----
+    // hLAVNI BOSS: COINCLING
     if (ziv) {
         cout << "\n=== POSLEDNÍ BITVA ===" << endl;
         cout << "Za poslední bránou slyšíš divné cinkání mincí..." << endl;
